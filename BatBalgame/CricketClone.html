@@ -1,0 +1,147 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Cricket Game</title>
+    <style>
+        body {
+            background-image: url('/Project/BatBalgame/1000_F_815698380_EGzki6pJ4yn2xCJfj0LDi7LSw4NmdHhO.jpg');
+            background-size: cover;
+            background-position: center;
+            font-family: Arial, sans-serif;
+            margin: 0;
+            padding: 0;
+            display: flex;
+            flex-direction: row;
+            justify-content: center;
+            align-items: center;
+            height: 100vh;
+        }
+       
+        .container {
+            display: flex;
+            align-items: center;
+            justify-content: space-around;
+            width: 90%;
+            max-width: 1000px;
+        }
+       
+        .Game {
+            border: 2px solid black;
+            padding: 20px;
+            border-color: rgb(94, 10, 150);
+            border-radius: 35px;
+            background-color: rgba(222, 161, 195, 0.646);
+            width: 45%;
+            max-width: 400px;
+        }
+       
+        h1 {
+            border: 2px solid black;
+            border-radius: 20px;
+            background-color: rgba(0, 255, 255, 0.58);
+            padding: 10px;
+            text-align: center;
+        }
+       
+        button {
+            border-radius: 35px;
+            width: 100px;
+            height: 40px;
+            background-color: rgba(15, 14, 13, 0.797);
+            border-color: aqua;
+            color: chocolate;
+            margin: 5px;
+            cursor: pointer;
+        }
+       
+        .message h3 {
+            margin: 10px 0;
+        }
+       
+        #sachin {
+            width: 45%;
+            max-width: 400px;
+            height: auto;
+        }
+       
+        @media (max-width: 800px) {
+            body {
+                flex-direction: column;
+                height: auto;
+                padding: 20px 0;
+            }
+            .container {
+                flex-direction: column;
+                align-items: center;
+            }
+            .Game, #sachin {
+                width: 90%;
+                max-width: 350px;
+                margin-bottom: 20px;
+            }
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <div class="Game">
+            <h1>Bat Ball Stump Game</h1>
+            <button onclick="playGame('Bat')">Bat</button>
+            <button onclick="playGame('Ball')">Ball</button>
+            <button onclick="playGame('Stump')">Stump</button>
+            <button onclick="resetGame()">Reset Game</button>
+           
+            <div class="message">
+                <h3 id="user">User Choice:</h3>
+                <h3 id="computer">Computer Choice:</h3>
+                <h3 id="result">Result:</h3>
+                <h3 id="score">Score:</h3>
+            </div>
+        </div>
+       
+        <img src="/Project/BatBalgame/1510f3d4-16ad-4d52-b46f-fa343d0b3e9d-sachin (2).png" alt="Sachin Tendulkar" id="sachin">
+    </div>
+   
+    <script>
+        let scoreStr = localStorage.getItem('Score');
+        let Score = scoreStr ? JSON.parse(scoreStr) : { win: 0, lost: 0, tie: 0 };
+       
+        function playGame(userChoice) {
+            let random = Math.random() * 3;
+            let ComputerChoice = random <= 1 ? 'Bat' : random <= 2 ? 'Ball' : 'Stump';
+           
+            let resultMsg;
+            if ((userChoice === 'Bat' && ComputerChoice === 'Ball') ||
+                (userChoice === 'Ball' && ComputerChoice === 'Stump') ||
+                (userChoice === 'Stump' && ComputerChoice === 'Bat')) {
+                resultMsg = 'You Won!';
+                Score.win++;
+            } else if (userChoice === ComputerChoice) {
+                resultMsg = 'Match Tie';
+                Score.tie++;
+            } else {
+                resultMsg = 'You Lost! Computer Wins';
+                Score.lost++;
+            }
+           
+            localStorage.setItem('Score', JSON.stringify(Score));
+            updateUI(userChoice, ComputerChoice, resultMsg);
+        }
+       
+        function updateUI(user, computer, result) {
+            document.querySelector('#user').innerText = `You Chose: ${user}`;
+            document.querySelector('#computer').innerText = `Computer Chose: ${computer}`;
+            document.querySelector('#result').innerText = result;
+            document.querySelector('#score').innerText = `Score - Won: ${Score.win}, Lost: ${Score.lost}, Tie: ${Score.tie}`;
+        }
+       
+        function resetGame() {
+            localStorage.clear();
+            Score = { win: 0, lost: 0, tie: 0 };
+            updateUI('', '', 'Game Reset');
+        }
+    </script>
+</body>
+</html>

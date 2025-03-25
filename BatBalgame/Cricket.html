@@ -1,0 +1,189 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Cricket Game</title>
+</head>
+<style>
+    body{
+       text-align: center;
+        background-image: url('/1000_F_815698380_EGzki6pJ4yn2xCJ.jpg');  
+    }
+    .Game{
+        border: 2px solid black;
+        margin: 80px; padding: 20px;
+        border-color: rgb(94, 10, 150);
+        border-radius: 15px;
+        background-color: rgba(85, 18, 241, 0.089);
+        width: 40%;
+        
+    }
+    h1{
+        border: 2px solid black;
+        border-radius: 20px;
+        width:380px;
+        margin-left: 14%;
+        background-color: rgba(0, 255, 255, 0.58);
+        text-shadow:0svh;
+    }
+    button{
+        border-radius: 35px;
+        width: 100px;
+        height: 40px;
+        background-color: rgba(51, 49, 45, 0.797);
+        border-color: aqua;
+        color: chocolate;
+    }
+    #sachin{
+        align-items: baseline;
+        justify-content: baseline;
+    }
+</style>
+<body>
+    <script>
+        let scoreStr=localStorage.getItem('Score');
+        let Score=JSON.parse(scoreStr);
+        if(scoreStr!=undefined){
+            Score=JSON.parse(scoreStr);
+        }
+        else
+         Score = {
+            win: 0,
+            lost: 0,
+            tie: 0
+        };
+        function userMsg(user,ComputerChoice,resultMsg){
+            document.querySelector('#user').innerText=`You Have Choosen ${user}`
+            document.querySelector('#computer').innerHTML=`Computer Choice is :${ComputerChoice}`;
+            document.querySelector('#result').innerText=resultMsg;
+            document.querySelector('#score').innerText=`Score is: Won:${Score.win} Loss:${Score.lost} Tie:${Score.tie}`
+        }
+    </script>
+    <div class="Game">
+    <h1>Bat Ball Stump Game </h1>
+    <button onclick="
+    let random=Math.random()*3
+    let ComputerChoice;
+    if(random>0 && random<=1)
+{
+    ComputerChoice='Bat';
+}
+else if(random>1 && random<=2)
+{
+    ComputerChoice='Ball';
+}
+ else{
+    ComputerChoice='Stump'
+ } 
+const ComputerMsg=(`Computer Choice is ${ComputerChoice}`);
+let resultMsg;
+if(ComputerChoice=='Ball')
+{ resultMsg=('You Won');
+    Score.win++;
+}
+else if(ComputerChoice=='Bat')
+{ resultMsg=('Match Tie');
+    Score.tie++;
+}
+else if(ComputerChoice=='Stump')
+{resultMsg=('You Loss Computer Wins');
+Score.lost++;
+}
+let user='Bat'
+localStorage.setItem('Score',JSON.stringify(Score));
+userMsg(user,ComputerChoice,resultMsg);
+    ">Bat</button>
+
+    <!-- Ball button -->
+    <button onclick="
+     console.log('You Chose ball')
+    random=Math.random()*3
+    if(random>0 && random<=1)
+{
+    ComputerChoice='Bat';
+    // console.log('Computer chose bat')
+}
+else if(random>1 && random<=2)
+{
+    ComputerChoice='Ball';
+    // console.log('Computer chose ball')
+}
+ else{
+    ComputerChoice='Stump'
+    // console.log('Computer Chose stump');
+ } 
+ComputerMsg=(`Computer Choice is ${ComputerChoice}`);
+if(ComputerChoice=='Stump')
+{ resultMsg=('You Won');
+Score.win++;
+}
+else if(ComputerChoice=='Ball')
+{ resultMsg=('Match Tie');
+    Score.tie++;
+}
+else if(ComputerChoice=='Bat')
+{resultMsg=('You Loss Computer Wins');
+    Score.lost++;
+}
+localStorage.setItem('Score',JSON.stringify(Score)); 
+user='Ball'
+userMsg(user,ComputerChoice,resultMsg);   
+
+    ">Ball</button>
+    <!-- Stump BUtton -->
+    <button onclick="
+         console.log('You Chose Stump')
+    random=Math.random()*3
+    if(random>0 && random<=1)
+{
+    ComputerChoice='Bat';
+    // console.log('Computer chose bat')
+}
+else if(random>1 && random<=2)
+{
+    ComputerChoice='Ball';
+    // console.log('Computer chose ball')
+}
+ else{
+    ComputerChoice='Stump'
+    // console.log('Computer Chose stump');
+ } 
+ComputerMsg=(`Computer Choice is ${ComputerChoice}`);
+if(ComputerChoice=='Ball')
+{ resultMsg=('You Won');
+    Score.win++;
+}
+else if(ComputerChoice=='Stump')
+{ resultMsg=('Match Tie');
+    Score.tie++;
+}
+else if(ComputerChoice=='Ball')
+{resultMsg=('You Loss Computer Wins');
+    Score.lost++;
+}
+localStorage.setItem('Score',JSON.stringify(Score));    
+user='stump';
+userMsg(user,ComputerChoice,resultMsg)
+">Stump</button>
+<button onclick="
+localStorage.clear('scoreStr');
+Score = {
+            win: 0,
+            lost: 0,
+            tie: 0
+        };
+    user='reset'
+    userMsg(user,0,'reset')
+">reset Game</button>
+<div class="message">
+    <h3 id="user">User Choice:</h3>
+    <h3 id="computer">Computer Choice:</h3>
+    <h3 id="result">Result :</h3>
+    <h3 id="score">Score :</h3>
+</div>
+</div>
+<img src="/1510f3d4-16ad-4d52-b46f-fa343d0b3e9d-sachin (2).png" alt="" height="100%" id="sachin">
+</body>
+</html>
